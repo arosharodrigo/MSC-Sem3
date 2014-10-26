@@ -1,0 +1,50 @@
+Specifications:
+Memory      - 3.0 GiB
+Processor   - Intel® Core™2 Duo CPU T5800 @ 2.00GHz × 2
+OS type     - 32-bit
+OS          - Fedora 17
+
+
+Step2:  Adding following line before calling rand() function, will generate random seed in each new run.
+        "srand(time(NULL))"
+
+Step4:
+
+    Results -
+              #1
+              Execution Time1:0.004070s
+              Execution Time2:0.001926s
+              #2
+              Execution Time1:0.004233s
+              Execution Time2:0.001900s
+              #3
+              Execution Time1:0.004098s
+              Execution Time2:0.001948s
+              #4
+              Execution Time1:0.004220s
+              Execution Time2:0.001937s
+              #5
+              Execution Time1:0.004086s
+              Execution Time2:0.001939s
+
+    Answer:   Timer2
+    Reason:
+    'Floating point calculation time' directly related to execution time of 'daxpyS' function in 'daxpy.c' file.
+    Timer2 includes that total time execution of daxpyS function only.
+    But Timer1 has included following.
+        1. memory allocation of vectors(values structure)
+        2. random number generation for those two vectors
+        3. execution time of 'daxpyS' function
+    Therefore Timer2 not suitable for measuring performance of floating point calculation as it is include extra time,
+    other than execution time of 'daxpy' function.
+
+
+Step5:
+       Average = (0.001926 + 0.001900 + 0.001948 + 0.001937 + 0.001939)/5 = 0.00965/5 = 0.001930
+
+       [Standard Deviation^2] = [(0.001926-0.001930)^2 + (0.001900-0.001930)^2 + (0.001948-0.001930)^2 + (0.001937-0.001930)^2 + (0.001939-0.001930)^2] / 5
+                              = 1.37*10^-9 / 5
+                              = 2.74*10^-10
+
+       Standard Deviation     = 1.655294536 * 10^-5
+                              = 1.6553 * 10^-5
